@@ -19,5 +19,8 @@ submit.onclick = () => {
     password
   }).then(res => {
     console.log(res)
+    if (res.data.code === 1) {
+      window.location.href = '/index.html'
+    }
   })
 }
