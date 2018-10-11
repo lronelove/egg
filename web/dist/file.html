@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>file</title>
+</head>
+<body>
+  <input type="file" name="file" id="file">
+
+  <script>
+    let fileNode = document.querySelector('#file')
+    console.log(file)
+    fileNode.addEventListener('change', () => {
+      const file = fileNode.files[0]
+      console.log(file)
+      let formData = new FormData()
+      formData.append('file', file)
+
+      let xml = new XMLHttpRequest()
+      xml.onreadystatechange = () => {
+        if (xml.readyState === 4 && xml.status === 200) {
+          console.log(xml.responseText)
+        }
+      }
+      xml.open('POST', 'http://localhost:7001/file/index')
+      xml.send()
+    })
+
+  </script>
+</body>
+</html>
