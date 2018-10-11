@@ -7,8 +7,15 @@ exports.cors = {
   package: 'egg-cors',
 };
 
+// mysql
 exports.mysql = {
   enable: true,
   package: 'egg-mysql',
+};
+
+// 验证
+exports.validate = {
+  enable: true,
+  package: 'egg-validate',
 };
 

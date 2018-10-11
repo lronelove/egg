@@ -28,17 +28,23 @@ class UserController extends Controller {
     } else {
       msg = '登陆成功'
       code = 1
+      ctx.cookies.set('username', username)
     }
     
     data = {
       data: {
        username,
-       password, 
+       password
       },
       msg,
       code
     }
     this.ctx.body = JSON.stringify(data)
+  }
+
+  async test () {
+    let user = await this.ctx.service.user.get()
+    this.ctx.body = user
   }
 }
 
