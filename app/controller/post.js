@@ -1,13 +1,13 @@
 const Controller = require('../core/base_controller.js')
 
 class PostController extends Controller {
-  async index () {
+  async index() {
     const { ctx } = this
     ctx.body = ctx
   }
 
   // 用来测试base_controller
-  async create () {
+  async create() {
     const { ctx, service } = this
     const data = {
       name: 'jack',
@@ -27,24 +27,24 @@ class PostController extends Controller {
   }
 
   // query的传值
-  async query () {
+  async query() {
     const { ctx } = this
     const query = ctx.query
     const { username, tel } = query
     // const str = `your username is ${username} and your telephone is ${tel}`
-    const str = username
+    const str = username // xss
     this.success(str, '注册成功！')
     // ctx.body = query
   }
 
   // params参数传值
-  async params () {
+  async params() {
     const ctx = this.ctx
     ctx.body = ctx.params
   }
 
   // 测试session
-  async fetchPosts () {
+  async fetchPosts() {
     const ctx = this.ctx
     const userId = ctx.session.userId
     if (!userId) {

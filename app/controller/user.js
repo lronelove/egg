@@ -3,7 +3,7 @@
 const Controller = require('egg').Controller;
 
 class UserController extends Controller {
-  async index () {
+  async index() {
     const ctx = this.ctx
     let user = await ctx.service.user.find() || []
     let data = {
@@ -14,7 +14,7 @@ class UserController extends Controller {
     ctx.body = data
   }
 
-  async login () {
+  async login() {
     const ctx = this.ctx
     const body = ctx.request.body // 里面包含传过来的参数
     let username = body.username
@@ -42,7 +42,7 @@ class UserController extends Controller {
     this.ctx.body = JSON.stringify(data)
   }
 
-  async test () {
+  async test() {
     let user = await this.ctx.service.user.get()
     this.ctx.body = user
   }

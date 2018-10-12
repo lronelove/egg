@@ -2,7 +2,7 @@ const Controller = require('../core/base_controller.js')
 // const fs = require('mz/fs')
 
 class UploadController extends Controller {
-    async index () {
+    async index() {
       this.ctx.body = 'index'
       // const ctx = this.ctx
       // const file = ctx.request.files[0]
@@ -21,7 +21,7 @@ class UploadController extends Controller {
       // }, '上传成功！')
     }
 
-    async test () {
+    async test() {
       const ctx = this.ctx
       const oss = ctx.oss || 'not found'
       ctx.body = oss
