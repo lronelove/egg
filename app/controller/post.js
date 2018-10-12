@@ -33,8 +33,8 @@ class PostController extends Controller {
     const { username, tel } = query
     // const str = `your username is ${username} and your telephone is ${tel}`
     const str = username // xss
-    this.success(str, '注册成功！')
-    // ctx.body = query
+    // this.success(str, '注册成功！')
+    ctx.body = str
   }
 
   // params参数传值

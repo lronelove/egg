@@ -18984,9 +18984,6 @@ submit.onclick = function () {
     password: password
   }).then(function (res) {
     console.log(res);
-    if (res.data.code === 1) {
-      window.location.href = '/index.html';
-    }
   });
 };
 },{"axios":"..\\node_modules\\axios\\index.js"}],"C:\\Users\\Administrator\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\parcel-bundler\\src\\builtins\\hmr-runtime.js":[function(require,module,exports) {
@@ -19018,7 +19015,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '59596' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '55404' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 

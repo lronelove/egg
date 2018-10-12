@@ -16905,7 +16905,7 @@ var xml = new XMLHttpRequest();
 xml.onreadystatechange = function () {
   if (xml.readyState === 4 && xml.status === 200) {
     var data = JSON.parse(xml.responseText);
-
+    console.log(xml.responseText);
     // 组合函数并处理数据
     var handleData = R.pipe(resolvedUserList, cvs, curryAppend('#userList'));
 
@@ -16943,7 +16943,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = '' || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + '53463' + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + '54315' + '/');
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
 

@@ -38,7 +38,7 @@ let xml = new XMLHttpRequest()
 xml.onreadystatechange = () => {
   if (xml.readyState === 4 && xml.status === 200) {
     let data = JSON.parse(xml.responseText)
-
+    console.log(JSON.parse(xml.responseText))
     // 组合函数并处理数据
     const handleData = R.pipe(
       resolvedUserList, 
