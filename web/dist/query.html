@@ -27,8 +27,10 @@
 
        xml.onreadystatechange = () => {
          if (xml.status === 200 && xml.readyState === 4) {
-           console.log(JSON.parse(xml.responseText))
-           let html = JSON.parse(xml.responseText).data
+             console.log(xml.responseText)
+           // console.log(JSON.parse(xml.responseText))
+           let html = xml.responseText
+             console.log(html)
            content.innerHTML = html
          }
        }
