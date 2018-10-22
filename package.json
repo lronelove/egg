@@ -10,6 +10,7 @@
     "egg-mysql": "^3.0.0",
     "egg-scripts": "^2.5.0",
     "egg-validate": "^2.0.1",
+    "moment": "^2.22.2",
     "node-xss": "^0.0.1",
     "ramda": "^0.25.0"
   },
