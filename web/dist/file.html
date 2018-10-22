@@ -7,6 +7,10 @@
   <title>file</title>
 </head>
 <body>
+  <form method="POST" action="http://localhost:7002/file/index" enctype="multipart/form-data">
+    file: <input name="file" type="file" />
+    <button type="submit">Upload</button>
+  </form>
   <input type="file" name="file" id="file">
 
   <script>
@@ -24,7 +28,7 @@
           console.log(xml.responseText)
         }
       }
-      xml.open('POST', 'http://localhost:7001/file/index')
+      xml.open('POST', 'http://localhost:7002/file/index')
       xml.send()
     })
 

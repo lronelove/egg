@@ -963,7 +963,7 @@ module.exports = function xhrAdapter(config) {
       request.addEventListener('progress', config.onDownloadProgress);
     }
 
-    // Not all browsers support upload events
+    // Not all browsers support uploads events
     if (typeof config.onUploadProgress === 'function' && request.upload) {
       request.upload.addEventListener('progress', config.onUploadProgress);
     }
