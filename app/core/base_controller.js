@@ -1,5 +1,5 @@
 const Controller = require('egg').Controller
-const xss = require('node-xss').clean
+// const xss = require('node-xss').clean
 
 class BaseController extends Controller {
   get user () {

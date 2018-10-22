@@ -4,12 +4,12 @@ module.exports = {
         return str.toLowerCase()
     },
 
-    // 把字符串转化成base64数据
+    // 把字符串转化成base64数据(一般使用在token)
     strToBase64(str) {
         return new Buffer(str).toString('base64')
     },
 
-    // 把base64数据转化成字符串
+    // 把base64数据转化成字符串(一般使用在token)
     base64ToStr(base64Str) {
       return new Buffer(base64Str, 'base64').toString()
     }
