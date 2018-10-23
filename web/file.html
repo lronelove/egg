@@ -7,7 +7,7 @@
   <title>file</title>
 </head>
 <body>
-  <form method="POST" action="http://localhost:7002/file/index" enctype="multipart/form-data">
+  <form method="POST" action="http://localhost:7002/file/index">
     file: <input name="file" type="file" />
     <button type="submit">Upload</button>
   </form>
@@ -15,12 +15,16 @@
 
   <script>
     let fileNode = document.querySelector('#file')
-    console.log(file)
+    // Content-Type: multipart/form-data
     fileNode.addEventListener('change', () => {
       const file = fileNode.files[0]
       console.log(file)
       let formData = new FormData()
       formData.append('file', file)
+      // fetch('http://localhost:7002/file/index', {
+      //     method: 'POST',
+      //     body: formData
+      // })
 
       let xml = new XMLHttpRequest()
       xml.onreadystatechange = () => {
@@ -28,8 +32,10 @@
           console.log(xml.responseText)
         }
       }
+      // xml.setRequestHeader('Content-Type', 'multipart/*')
+      // xml.setRequestHeader('content-type', 'multipart/form-data')
       xml.open('POST', 'http://localhost:7002/file/index')
-      xml.send()
+      xml.send(formData)
     })
 
   </script>
