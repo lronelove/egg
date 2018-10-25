@@ -6,12 +6,15 @@ class HomeController extends Controller {
     // 返回request对象
     async index() {
         let str = 'HELLO1'
+        let res = this.app.validate('isTel', 15338870406)
         let json = {
             "data": this.ctx.helper.toLowerCase(str),
             "code": 1,
             "msg": "success",
+            "res": res
             // "config": this.config
         }
+        
         this.ctx.body = json
     }
 
