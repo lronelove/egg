@@ -1,67 +1,69 @@
-// const Service = require('egg').Service;
-const Service = require('./../core/base_service')
+const Service = require('./../core/base_service.js')
 
 class UserService extends Service {
-  async find () {
-    const sql = 'select * from user'
-    const user = await this.app.mysql.query(sql)
-    
-    return user;
-  }
+  async list (page, count) {
+    const start = (page - 1) * count // 开始的页数
+    const sql = `SELECT * FROM USER LIMIT ${start}, ${count}`
+    const data = await this.query(sql)
+    let ajaxData = []
 
-  async login (username, password) {
-    const sql = `select * from user where username = ? and password = ?`
-    const data = await this.app.mysql.query(sql, [username, password])
-
-    return data
-  }
-
-  async get () {
-    // 需要更改的参数 
-    const row = {
-      tel: 12345
+    for (let i = 0, len = data.length; i <len; i++) {
+      let item = data[i]
+      ajaxData.push({
+        username: item.username,
+        realName: item.realname,
+        userId: item.user_id,
+        email: item.email,
+        avatar: item.avatar_image,
+        permission: item.permission.trim() === 'user' ? '普通用户': '管理员',
+        jobName: item.job_name
+      })
     }
-    
-    // 查询的条件
-    const options = {
-      where: {
-        username: 'lronelove'
+   
+    return ajaxData
+  }
+
+  async index () {
+  }
+
+  // 登录
+  async login (username, password) { // 登陆
+    let data = await this.get('user', {
+      username: username
+    })
+
+    if (!data) { // 查询不到用户
+      return {
+        msg: '用户不存在',
+        login: false,
+        data: ''
       }
     }
-    // 更改tel
-    // const result = await this.app.mysql.update('user', row, options)
-    const result = await this.update('user', row, options)
 
-    // 查询更改之后的结果
+    let pwd = data.password
 
-    // const user = await this.app.mysql.get('user', {
-    //   username: 'lronelove'
-    // })
+    if (pwd !== password) {
+      return {
+        msg: '密码错误！',
+        login: false,
+        data: ''
+      }
+    } else {
+      return {
+        msg: '登陆成功',
+        login: true,
+        data: data
+      }
+    }
+  }
 
-    // 在user表里面插入一条数据
-    const insertRes = await this.insert('user', {
-      username: 'rose',
-      password: 'rose',
-      tel: '234'
+  // 获取tokenKey
+  async getTokenKey () { // 获取编码token的秘钥
+    const data = this.get('config', {
+      id: 1
     })
 
-    // 插入一段数据判断成功与否
-    let insertSuccessFlag = insertRes.affectedRows === 1
-
-    const user = await this.get('user', {
-      username: 'rose'
-    })
-
-    // 删除的返回结果
-    const deleteRes = await this.delete('user', {
-      username: 'rose'
-    })
-
-    // 判断删除是否成功
-    let deleteSuccessFlag = deleteRes.affectedRows === 1
-    console.log(user)
-
-    return { user, result}
+    return JSON.stringify(data)
   }
 }
 

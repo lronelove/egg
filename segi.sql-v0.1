@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- 主机: localhost
--- 生成日期: 2018 年 11 月 13 日 06:43
+-- 生成日期: 2018 年 11 月 13 日 03:20
 -- 服务器版本: 5.5.53
 -- PHP 版本: 5.4.45
 
@@ -28,49 +28,82 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `article` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '文章的id',
-  `category_id` int(11) NOT NULL COMMENT '子分类id',
+  `category_children_id` int(11) NOT NULL COMMENT '子分类id',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建的时间',
   `title` varchar(255) NOT NULL COMMENT '标题名称',
   `content` mediumtext NOT NULL COMMENT '文章的内容',
-  `user_id` int(255) NOT NULL COMMENT '用户id,即作者',
+  `author` varchar(255) NOT NULL COMMENT '作者',
   `view_number` int(11) NOT NULL DEFAULT '0' COMMENT '浏览次数',
-  `layer` varchar(255) NOT NULL DEFAULT ',' COMMENT '显示分类所在的层级信息',
+  `layer` varchar(255) NOT NULL COMMENT '显示分类所在的层级信息',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='文章表' AUTO_INCREMENT=5 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='文章表' AUTO_INCREMENT=3 ;
 
 --
 -- 转存表中的数据 `article`
 --
 
-INSERT INTO `article` (`id`, `category_id`, `create_time`, `title`, `content`, `user_id`, `view_number`, `layer`) VALUES
-(3, 1, '2018-11-13 06:37:14', 'html开发规范', 'html开发规范的内容', 1, 0, ','),
-(4, 1, '2018-11-13 06:37:14', 'css开发规范', 'css开发规范内容', 1, 0, ',');
+INSERT INTO `article` (`id`, `category_children_id`, `create_time`, `title`, `content`, `author`, `view_number`, `layer`) VALUES
+(1, 1, '2018-10-30 02:49:54', 'html规范（一）', '这里是html规范一', 'jack', 0, '1,1,'),
+(2, 2, '2018-10-30 02:50:05', 'button组件---BaseButton', '这里是button基础组件内容', 'jack', 0, '2,2,');
 
 -- --------------------------------------------------------
 
 --
--- 表的结构 `category`
+-- 表的结构 `category_children`
 --
 
-CREATE TABLE IF NOT EXISTS `category` (
+CREATE TABLE IF NOT EXISTS `category_children` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '子分类id',
+  `category_main_id` int(11) NOT NULL COMMENT '所属的主分类id',
   `category_name` varchar(255) NOT NULL COMMENT '子分类名称',
   `category_type` varchar(255) NOT NULL COMMENT '子分类种类',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建的时间',
   `detail` varchar(255) NOT NULL COMMENT '子分类的详情介绍',
-  `article_count` int(11) NOT NULL COMMENT '该分类下面文档总数',
+  `layer` varchar(255) NOT NULL COMMENT '显示分类所在的层级信息',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='子分类表' AUTO_INCREMENT=16 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='子分类表' AUTO_INCREMENT=11 ;
 
 --
--- 转存表中的数据 `category`
+-- 转存表中的数据 `category_children`
 --
 
-INSERT INTO `category` (`id`, `category_name`, `category_type`, `create_time`, `detail`, `article_count`) VALUES
-(1, '开发规范', 'code_standard', '2018-11-13 06:32:58', '开发规范详情', 5),
-(2, '设计规范', 'design_standard', '2018-11-13 06:33:07', '设计规范详情', 4),
-(3, '测试规范', 'test_standard', '2018-11-13 06:33:16', '测试规范详情', 5),
-(4, '流程规范', 'process_standard', '2018-11-13 06:33:24', '流程规范详情', 4);
+INSERT INTO `category_children` (`id`, `category_main_id`, `category_name`, `category_type`, `create_time`, `detail`, `layer`) VALUES
+(1, 1, 'HTML规范', 'html', '2018-10-30 02:35:05', '有关html规范', '1,'),
+(2, 2, 'button组件库文档', 'button', '2018-10-30 02:35:12', '有关button的组件库文档', '2,'),
+(3, 1, 'css开发规范', 'css', '2018-11-06 02:08:23', '这是css开发规范', '1,'),
+(4, 1, 'css开发规范2', 'css2', '2018-11-06 02:08:23', '这是css开发规范2', '1,'),
+(5, 2, 'vue组件文档', 'vue', '2018-11-06 02:10:13', '这是vue组件文档', '2,'),
+(6, 2, 'vue2组件文档2', 'vue2', '2018-11-06 02:10:13', '这是vue2组件文档2', '2,'),
+(7, 3, 'vue分享', 'vue_share', '2018-11-06 02:12:54', '这是vue分享', '3,'),
+(8, 3, 'css分享', 'css', '2018-11-06 02:12:54', '这是css分享', '3,'),
+(9, 4, 'vscode', 'vscode', '2018-11-06 02:15:45', '前端开发开发神器', '4,'),
+(10, 4, 'webstorm', 'webstorm', '2018-11-06 02:15:45', '前端功能强大的编辑器', '4,');
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `category_main`
+--
+
+CREATE TABLE IF NOT EXISTS `category_main` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主分类id',
+  `type` varchar(255) NOT NULL COMMENT '主分类的种类',
+  `type_name` varchar(255) NOT NULL COMMENT '主分类的名字',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '主分类创建的时间',
+  `type_detail` varchar(255) NOT NULL COMMENT '主分类的详情',
+  `layer` varchar(255) NOT NULL DEFAULT '' COMMENT '展示层级信息的，默认是空',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COMMENT='主分类，就是在首页tab菜单栏' AUTO_INCREMENT=5 ;
+
+--
+-- 转存表中的数据 `category_main`
+--
+
+INSERT INTO `category_main` (`id`, `type`, `type_name`, `create_time`, `type_detail`, `layer`) VALUES
+(1, 'development_norms', '开发规范', '2018-10-24 03:32:50', '主要包括五部分内容：PC规范、移动端规范、性能优化、等', ''),
+(2, 'component_document', '组件文档', '2018-10-24 03:32:50', '主要包括五部分内容：组件文档、组件文档·1、组件文档2、等', ''),
+(3, 'week_share', '每周分享', '2018-10-24 03:34:35', '每周分享每周分享每周分享', ''),
+(4, 'tools_recommended', '工具推荐', '2018-10-24 03:34:35', '工具推荐工具推荐工具推荐工具推荐', '');
 
 -- --------------------------------------------------------
 
@@ -95,21 +128,6 @@ INSERT INTO `config` (`id`, `type`, `value`) VALUES
 -- --------------------------------------------------------
 
 --
--- 表的结构 `home_nav`
---
-
-CREATE TABLE IF NOT EXISTS `home_nav` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `nav_name` varchar(30) NOT NULL COMMENT '导航名字',
-  `layer` varchar(255) NOT NULL COMMENT '层级',
-  `parent_id` int(11) NOT NULL COMMENT '父级id',
-  `url` varchar(255) NOT NULL COMMENT '跳转的路径',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='首页导航' AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- 表的结构 `reply`
 --
 
@@ -123,6 +141,14 @@ CREATE TABLE IF NOT EXISTS `reply` (
   `layer` varchar(255) NOT NULL COMMENT '显示分类所在的层级信息',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+
+--
+-- 转存表中的数据 `reply`
+--
+
+INSERT INTO `reply` (`id`, `article_id`, `content`, `reply_from_id`, `reply_to_id`, `create_time`, `layer`) VALUES
+(1, 1, '这个文章写得好', 1, 0, '2018-10-30 02:50:38', '1,1,1,'),
+(2, 1, '这是一个文章内容', 1, 0, '2018-10-30 02:50:53', '1,1,1,');
 
 -- --------------------------------------------------------
 
@@ -149,7 +175,7 @@ INSERT INTO `specification` (`table_id`, `type`, `table_name`, `detail`) VALUES
 (4, 'category_children', '子分类', '所有的二级子分类的表格数据'),
 (5, 'category_main', '主分类', '主分类有关信息，及首页的导航栏内容'),
 (6, 'replay', '回复的表格', '专门用于收集回复的表格'),
-(7, 'home_nav', 'home_nav', '首页可配置的导航列表表格'),
+(7, '', '', ''),
 (8, '', '', '');
 
 -- --------------------------------------------------------
@@ -174,15 +200,15 @@ CREATE TABLE IF NOT EXISTS `user` (
   `user_type` varchar(255) NOT NULL COMMENT '用户角色，分管理员和普通用户',
   PRIMARY KEY (`user_id`),
   FULLTEXT KEY `realname` (`realname`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33953 ;
 
 --
 -- 转存表中的数据 `user`
 --
 
 INSERT INTO `user` (`user_id`, `username`, `password`, `permisson`, `telepthone`, `realname`, `create_time`, `update_time`, `avatar_image`, `email`, `job_type`, `job_name`, `user_type`) VALUES
-(1, 'lronelove', 'w657828543', 'root', '15338870406', '王喆', '2018-11-13 06:36:02', '', 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=284744206,1494248905&fm=27&gp=0.jpg', '657828543@qq.com', 'web', 'Web前端', '管理员'),
-(2, 'jack', 'jack', 'user', '15338870406', '王者', '2018-11-13 06:36:04', '', 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=284744206,1494248905&fm=27&gp=0.jpg', '657828543@qq.com', 'web', 'Web前端', '普通用户');
+(33951, 'lronelove', 'w657828543', 'root', '15338870406', '王喆', '2018-11-13 02:44:29', '', 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=284744206,1494248905&fm=27&gp=0.jpg', '657828543@qq.com', 'web', 'Web前端', '管理员'),
+(33952, 'jack', 'jack', 'user', '15338870406', '王者', '2018-11-13 02:44:29', '', 'https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=284744206,1494248905&fm=27&gp=0.jpg', '657828543@qq.com', 'web', 'Web前端', '普通用户');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
