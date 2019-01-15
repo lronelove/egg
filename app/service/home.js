@@ -12,13 +12,12 @@ class HomeService extends Service {
           navName: item.nav_name,
           url: item.url
         })
-
       })
+
       return data 
     }
 
     // 首页推荐文章模块接口q                                                                                                                                                                                        
-
     async recommend () {
       const sql1 = `SELECT * FROM recommend` // 查询所有推荐的主分类
       let data = []

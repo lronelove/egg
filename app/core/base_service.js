@@ -17,8 +17,8 @@ class BaseService extends Service {
     }
 
     // 在表tableName里面删除一行数据,deleteOptions是查询的字段
-    async delete (tableName, deleteOptions) {
-        const data = await this.app.mysql.delete(tableName, deleteOptions)
+    async delete (tableName, deleteOptions, row = { status: 0 }) {
+        const data = await this.app.mysql.update(tableName, row, deleteOptions)
 
         return data.affectedRows === 1
     }

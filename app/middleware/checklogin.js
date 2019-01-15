@@ -1,3 +1,4 @@
+// 判断用户是否登录的中间件
 module.exports = () => {
     const jwt = require('jsonwebtoken')
 
@@ -5,13 +6,13 @@ module.exports = () => {
         if (ctx.request.header['authorization']) {
             let token = ctx.request.header['authorization'].split(' ')[1]
             let decoded
-            let tokenKey = ctx.service.user.getTokenKey() || 'nothing'
-
+            let tokenKey = await ctx.service.user.getTokenKey() || 'nothing'
+ 
             //解码token
             try {
                 decoded = jwt.verify(token, tokenKey)
             } catch (error) {
-                const ctx = this.ctx
+                //const ctx = this.ctx
                 const body = ctx.request.body // 里面包含传过来的参数
                 let username = body.username
                 let password = body.password
@@ -34,7 +35,8 @@ module.exports = () => {
                 } else {
                     ctx.status = 401;
                     ctx.body = {
-                        message: 'token失效'
+                        code: -1,
+                        msg: 'token失效'
                     }
                     return;
                 }
@@ -50,7 +52,8 @@ module.exports = () => {
         } else {
             ctx.status = 401
             ctx.body = {
-                message: '没有token'
+                code: -1,
+                msg: '没有token'
             }
             return;
         }

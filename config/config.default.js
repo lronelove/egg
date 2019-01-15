@@ -27,6 +27,9 @@ module.exports = appInfo => {
     jsonLimit: '10mb',
   }
 
+  // 配置公共的api版本
+  config.apiVersion = '/api/v1'
+  
   return config;
 };
 

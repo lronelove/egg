@@ -3,6 +3,15 @@
 module.exports = appInfo => {
     const config = {};
 
+    // 处理跨域的插件
+    config.security = {
+        csrf: {
+        enable: false,
+        ignoreJSON: false,
+        },
+        domainWhiteList: ['localhost', '']
+    };
+
     // 数据库的配置
     config.mysql = {
         // 单数据库信息配置
